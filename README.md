@@ -80,9 +80,6 @@ linux-system-monitor/
 ├── database/
 │   └── schema.sql
 │
-├── screenshots/
-│   └── dashboard.png
-│
 ├── Makefile
 ├── README.md
 └── .gitignore
