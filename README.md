@@ -1,30 +1,57 @@
 # Linux System Monitoring Dashboard
 
-A real-time Linux System Monitoring Dashboard built with **C++**, **Linux System APIs**, and **MySQL**. The application monitors system resources, tracks running processes, stores historical performance metrics, and provides basic analytics through a terminal-based interface.
+A real-time **Linux System Monitoring Dashboard** built using **C++**, **Linux System APIs**, and **MySQL**. This project monitors system resources, tracks running processes, stores historical performance data, and provides analytics through a terminal-based interface.
+
+---
 
 ## Features
 
-* Real-time CPU usage monitoring
-* Memory usage monitoring
-* Disk usage monitoring
-* System uptime tracking
-* Top 10 memory-consuming processes
-* Automatic MySQL logging of system metrics
-* Historical performance analytics
-* Average CPU usage calculation
-* Average memory usage calculation
-* Peak CPU usage tracking
-* Recent system log display
+### Real-Time System Monitoring
+
+* CPU Usage Monitoring
+* Memory Usage Monitoring
+* Disk Usage Monitoring
+* System Uptime Monitoring
+
+### Process Monitoring
+
+* Displays the Top 10 Memory-Consuming Processes
+* Reads process information directly from the Linux `/proc` filesystem
+* Sorts processes using C++ STL algorithms
+
+### Database Integration
+
+* MySQL database connectivity
+* Automatic periodic logging of system metrics
+* Historical performance data storage
+
+### Analytics
+
+* Average CPU Usage
+* Average Memory Usage
+* Peak CPU Usage
+* Recent System Logs
+
+### Software Design
+
 * Modular C++ architecture
+* Separate source and header files
+* Easy to extend with additional monitoring modules
+
+---
 
 ## Technologies Used
 
 * C++
-* Linux `/proc` filesystem
+* Linux
 * MySQL
 * MySQL Connector/C++
-* STL (Vector, Sort, Filesystem)
 * GNU g++
+* STL (Vector, Sort, Filesystem)
+* Linux `/proc` Filesystem
+* Object-Oriented Programming
+
+---
 
 ## Project Structure
 
@@ -50,33 +77,134 @@ linux-system-monitor/
 │   ├── process.cpp
 │   └── uptime.cpp
 │
+├── database/
+│   └── schema.sql
+│
+├── screenshots/
+│   └── dashboard.png
+│
 ├── Makefile
 ├── README.md
 └── .gitignore
 ```
 
-## Installation
+---
 
-Clone the repository:
+# Dashboard Preview
 
-```bash
-git clone https://github.com/YOUR_USERNAME/linux-system-monitor.git
-cd linux-system-monitor
+Add your dashboard screenshot here.
+
+```markdown
+<img width="490" height="521" alt="image" src="https://github.com/user-attachments/assets/12c2f822-6174-4282-9819-2610e62bc9bd" />
+
 ```
 
-Compile:
+---
+
+# Installation
+
+## 1. Clone the Repository
 
 ```bash
-g++ -std=c++17 src/*.cpp -Iinclude -lmysqlcppconn -o monitor
+git clone https://github.com/darshansaini9/Linux-System-Monitoring-Dashboard
+
+cd Linux-System-Monitoring-Dashboard
 ```
 
-Run:
+---
+
+## 2. Install MySQL
+
+Ubuntu
+
+```bash
+sudo apt update
+
+sudo apt install mysql-server
+
+sudo systemctl enable mysql
+
+sudo systemctl start mysql
+```
+
+---
+
+## 3. Install MySQL Connector for C++
+
+```bash
+sudo apt install libmysqlcppconn-dev
+```
+
+---
+
+## 4. Create the Database
+
+Run
+
+```bash
+sudo mysql < database/schema.sql
+```
+
+or manually
+
+```bash
+sudo mysql
+```
+
+```sql
+CREATE DATABASE system_monitor;
+
+USE system_monitor;
+
+CREATE TABLE system_metrics
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cpu_usage FLOAT,
+    memory_usage FLOAT,
+    disk_usage FLOAT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 5. Create Database User
+
+Inside MySQL
+
+```sql
+CREATE USER 'monitor'@'localhost'
+IDENTIFIED BY 'monitor123';
+
+GRANT ALL PRIVILEGES
+ON system_monitor.*
+TO 'monitor'@'localhost';
+
+FLUSH PRIVILEGES;
+```
+
+---
+
+## 6. Compile
+
+```bash
+g++ -std=c++17 src/*.cpp \
+-Iinclude \
+-lmysqlcppconn \
+-o monitor
+```
+
+---
+
+## 7. Run
 
 ```bash
 ./monitor
 ```
 
-## Sample Output
+---
+
+# Sample Output
 
 ```text
 ===== Linux System Monitor =====
@@ -89,34 +217,94 @@ Uptime       : 1h 32m 17s
 ===== Top 10 Memory Consuming Processes =====
 
 PID     NAME                MEM(KB)
+
 5658    brave               717900
 7933    mysqld              533340
 5560    brave               380468
+3124    gnome-shell         302964
+5611    brave               242556
 
 ===== Analytics =====
 
 Average CPU Usage : 3.39%
+
 Average Memory Usage : 12.15%
+
 Peak CPU Usage : 26.67%
 
 Recent Logs
-2026-06-24 18:23:38 | CPU=0.84% | MEM=12.60% | DISK=6.61%
+
+2026-06-24 18:33:51 | CPU=5.04% | MEM=12.51% | DISK=6.62%
+2026-06-24 18:31:07 | CPU=5.00% | MEM=12.83% | DISK=6.62%
+2026-06-24 18:23:38 | CPU=0.84% | MEM=12.60% | DISK=6.62%
 ```
 
-## Future Improvements
+---
 
-* Process CPU utilization
-* Network monitoring
-* Multi-machine distributed monitoring
-* Export reports to CSV
-* ncurses-based interactive dashboard
-* Web dashboard
-* Alert system for high resource usage
+# Database Schema
 
-## Author
+```sql
+CREATE DATABASE system_monitor;
+
+USE system_monitor;
+
+CREATE TABLE system_metrics
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cpu_usage FLOAT,
+    memory_usage FLOAT,
+    disk_usage FLOAT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+# Future Enhancements
+
+* CPU Usage Per Process
+* Network Monitoring
+* GPU Monitoring
+* Temperature Monitoring
+* CSV Report Export
+* PDF Report Generation
+* ncurses-based Interactive Dashboard
+* Web Dashboard
+* REST API
+* Distributed Monitoring Across Multiple Linux Systems
+* Email Alerts for High Resource Usage
+* Docker Support
+
+---
+
+# Learning Outcomes
+
+This project helped in understanding:
+
+* Linux `/proc` Filesystem
+* Linux System Programming
+* Process Management
+* Memory Monitoring
+* File System APIs
+* C++ STL
+* Sorting Algorithms
+* MySQL Integration
+* Database Connectivity
+* Modular Software Design
+
+---
+
+# Author
 
 **Darshan Saini**
 
 B.Tech Computer Science & Engineering (Cyber Security)
 
 Poornima College of Engineering, Jaipur
+
+
+---
+
+# License
+
+This project is released under the MIT License.
